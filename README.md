@@ -1,7 +1,7 @@
 # Clawy
 
-<p align="center">
-  <img src="assets/exports/gif/idle.gif" alt="Clawy" width="128" style="image-rendering: pixelated;">
+<p align="left">
+  <img src="https://github.com/user-attachments/assets/2863c0c6-301f-4f8b-ad91-2249f3c69174" alt="Clawy" width="128" style="image-rendering: pixelated;">
 </p>
 
 Clawy is built as a cute pixel companion for [Claude Code](https://docs.anthropic.com/en/docs/claude-code) sessions, a little guy that fits in your pocket that tells you what's going on, lets you approve or deny without touching your keyboard, and turns your whole session into a cozy co-op game.
