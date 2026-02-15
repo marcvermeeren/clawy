@@ -34,6 +34,8 @@ static char aprBuf[TCP_BUF];
 static uint8_t aprPos = 0;
 
 static bool _wifiUp = false;
+static unsigned long _wifiReconnectAt = 0;
+#define WIFI_RECONNECT_INTERVAL 5000  // retry every 5s when disconnected
 
 // Approval pending state — keeps client alive even after half-close
 static bool _approvalPending = false;
@@ -102,7 +104,14 @@ void wifiCheck() {
                   WiFi.localIP().toString().c_str(), hostname);
   } else if (!up && _wifiUp) {
     _wifiUp = false;
-    Serial.println("WiFi: disconnected");
+    _wifiReconnectAt = millis() + WIFI_RECONNECT_INTERVAL;
+    Serial.println("WiFi: disconnected, will reconnect");
+  } else if (!up && !_wifiUp) {
+    // Periodically try to reconnect
+    if (millis() >= _wifiReconnectAt) {
+      WiFi.reconnect();
+      _wifiReconnectAt = millis() + WIFI_RECONNECT_INTERVAL;
+    }
   }
 }
 

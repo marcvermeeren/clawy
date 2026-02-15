@@ -182,17 +182,17 @@ elif [ -n "$BASH_VERSION" ] || [ "$SHELL" = "/bin/bash" ]; then
 fi
 
 if [ -n "$SHELL_PROFILE" ]; then
-  if grep -q 'alias clawy=' "$SHELL_PROFILE" 2>/dev/null; then
+  if grep -q 'clawy' "$SHELL_PROFILE" 2>/dev/null && grep -q 'CLAWY=1' "$SHELL_PROFILE" 2>/dev/null; then
     echo -e "   ${C_GREEN}Alias already in ${SHELL_PROFILE}${C_RESET}"
   else
     echo -e "   To launch Clawy sessions, you can add a shell alias:"
-    echo -e "   ${C_DIM}alias clawy=\"CLAWY=1 claude\"${C_RESET}"
+    echo -e "   ${C_DIM}clawy() { CLAWY=1 claude \"\\\$@\"; CLAWY=1 ~/.clawy/hooks/send-status.sh READY; }${C_RESET}"
     echo ""
     read -p "   Add to $SHELL_PROFILE? [y/N] " REPLY
     if [[ "$REPLY" =~ ^[Yy]$ ]]; then
       echo '' >> "$SHELL_PROFILE"
       echo '# Clawy — Claude Code companion device' >> "$SHELL_PROFILE"
-      echo 'alias clawy="CLAWY=1 claude"' >> "$SHELL_PROFILE"
+      echo 'clawy() { CLAWY=1 claude "$@"; CLAWY=1 '"$HOOKS_DIR"'/send-status.sh READY; }' >> "$SHELL_PROFILE"
       echo -e "   ${C_GREEN}Added!${C_RESET} Run ${C_DIM}source $SHELL_PROFILE${C_RESET} or open a new terminal."
     else
       echo -e "   ${C_DIM}Skipped — add it manually anytime.${C_RESET}"
@@ -220,9 +220,6 @@ echo ""
 echo -e "  ${C_WHITE}Start a session:${C_RESET}"
 echo -e "    ${C_CYAN}clawy${C_RESET}  ${C_DIM}(or CLAWY=1 claude)${C_RESET}"
 echo ""
-echo -e "  ${C_WHITE}Need to flash your device?${C_RESET}"
-echo -e "    Visit the web flasher to install firmware"
-echo -e "    and configure WiFi — right from your browser."
-echo ""
-echo -e "    ${C_CYAN}https://clawy.dev/flash${C_RESET}"
+echo -e "  ${C_WHITE}Flash your device:${C_RESET}"
+echo -e "    ${C_CYAN}https://clawy.lol/flash${C_RESET}"
 echo ""

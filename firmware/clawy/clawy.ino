@@ -2,6 +2,8 @@
 // Animated pixel art fox/cat on M5StickC Plus 2 (135x240 color TFT)
 // Driven by Claude Code hooks over WiFi
 
+#define FIRMWARE_VERSION "0.1.0-beta"
+
 #include <M5Unified.h>
 #include "display.h"
 #include "wifi_provision.h"
@@ -14,6 +16,7 @@
 #define FRAME_MS       200  // ~5 FPS animation
 #define FRAME_MS_SLEEP 500  // ~2 FPS sleeping (slower, dreamy)
 #define BUF_SIZE      256   // serial line buffer (room for MESSAGE: payloads)
+#define BUF_TIMEOUT_MS 5000 // discard incomplete serial line after 5s
 #define IDLE_SLEEP_MS 30000 // idle → sleeping after 30s
 #define BLINK_INTERVAL 4000 // blink every ~4 seconds
 
@@ -64,6 +67,7 @@ static unsigned long dizzyStart = 0;
 
 static char lineBuf[BUF_SIZE];
 static uint8_t linePos = 0;
+static unsigned long lineLastByte = 0;
 
 static M5Canvas canvas(&M5.Display);
 
@@ -638,7 +642,13 @@ void loop() {
       }
     } else if (linePos < BUF_SIZE - 1) {
       lineBuf[linePos++] = c;
+      lineLastByte = millis();
     }
+  }
+
+  // Discard incomplete serial buffer after timeout
+  if (linePos > 0 && millis() - lineLastByte > BUF_TIMEOUT_MS) {
+    linePos = 0;
   }
 
   // WiFi

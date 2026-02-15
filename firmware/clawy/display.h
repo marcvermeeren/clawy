@@ -633,11 +633,12 @@ int drawWrappedText(M5Canvas& cv, const char* text, int16_t x, int16_t y,
       }
     }
 
-    // Draw this line (temporarily null-terminate)
-    char saved = ((char*)text)[pos + breakAt];
-    ((char*)text)[pos + breakAt] = '\0';
-    cv.drawString(text + pos, x, y + lines * lineHeight);
-    ((char*)text)[pos + breakAt] = saved;
+    // Draw this line (copy to local buffer to avoid mutating const input)
+    char lineBuf[64];
+    int segLen = (breakAt < (int)sizeof(lineBuf) - 1) ? breakAt : (int)sizeof(lineBuf) - 1;
+    memcpy(lineBuf, text + pos, segLen);
+    lineBuf[segLen] = '\0';
+    cv.drawString(lineBuf, x, y + lines * lineHeight);
 
     lines++;
     pos += breakAt;

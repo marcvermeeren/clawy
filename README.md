@@ -1,6 +1,10 @@
 # Clawy
 
-A JRPG-styled companion device for [Claude Code](https://docs.anthropic.com/en/docs/claude-code). A pixel art fox/cat lives on an M5StickC Plus 2 and reacts to your coding session in real-time — thinking, running, celebrating, or waiting for your input.
+<p align="center">
+  <img src="assets/exports/states/ready.gif" alt="Clawy — Awaiting orders" width="200">
+</p>
+
+Clawy is built as a cute pixel companion for [Claude Code](https://docs.anthropic.com/en/docs/claude-code) sessions, a little guy that fits in your pocket that tells you what's going on, lets you approve or deny without touching your keyboard, and makes the whole experience feel a bit more alive.
 
 ## What You Need
 
@@ -78,18 +82,13 @@ The device advertises itself as `clawy.local` via mDNS. No IP configuration need
 - **Button A**: Approve permission requests, skip boot animation
 - **Button B**: Deny permission requests, toggle stats screen
 - **Button B (long press)**: Enter demo mode
+- **Button A + B (hold during boot)**: Reset WiFi credentials
 
 ## WiFi Setup
 
-### First-Time Setup
+If you flashed via the [web flasher](https://clawy.lol/flash), enter your WiFi credentials on the setup page after flashing. If you built from source, either add credentials to `secrets.h` or the device will enter provisioning mode on first boot.
 
-If you flashed via the web flasher, WiFi credentials are configured during the flash process using the Improv WiFi protocol.
-
-If you built from source without `secrets.h`, the device enters provisioning mode — connect via a Web Serial-capable browser to configure WiFi.
-
-### Reset WiFi
-
-Hold both buttons (A + B) during boot to clear saved WiFi credentials. The device will re-enter provisioning mode.
+To reset WiFi, hold both buttons (A + B) during boot.
 
 ## Uninstall
 
@@ -97,7 +96,7 @@ Hold both buttons (A + B) during boot to clear saved WiFi credentials. The devic
 ./uninstall.sh
 ```
 
-This removes the hooks from Claude Code settings and deletes `~/.clawy/`. If you added the `clawy` alias to your shell profile, remove that line manually.
+This removes the hooks from Claude Code settings and deletes `~/.clawy/`. If you added the `clawy` function to your shell profile, remove that line manually.
 
 ## Project Structure
 
@@ -105,10 +104,56 @@ This removes the hooks from Claude Code settings and deletes `~/.clawy/`. If you
 clawy/
 ├── firmware/clawy/     Arduino sketch (M5StickC Plus 2)
 ├── hooks/              Claude Code hook scripts
-├── marketing/          Sprite exports and assets
+├── assets/          Sprite exports and assets
 ├── install.sh          Hook installer
 └── uninstall.sh        Hook uninstaller
 ```
+
+## Features
+
+◆ 8 animated states to see what Claude is doing at a glance
+
+◆ Approve or deny straight from the device, no need to be at your computer
+
+★ Powered by Claude Code hooks native integration
+
+♥ Runs on an off-the-shelf M5StickC Plus 2
+
+◆ Works from any project, Clawy follows your sessions
+
+★ JRPG aesthetic portrait frames, dialog boxes, scrolling quest text, particle effects and boot sequence
+
+♥ Zero config networking just plug in and go
+
+◆ Session stats like prompts, tool calls, errors, and average response time on a simple stats screen
+
+★ Clawy curls up to sleep after 30 seconds of inactivity
+
+♥ No cloud, no server just plain TCP on your local network, nothing leaves your network
+
+## Roadmap
+
+**Planned fixes:**
+- Approval port authentication (shared secret token)
+- Dependency checks in install/hook scripts
+- WiFi provisioning colon-in-SSID fix
+
+**Future:**
+- Multi-session support (multiple Claude sessions, multiple devices)
+- Sound effects via buzzer (approve alert, done chime, error buzz)
+- OTA firmware updates from browser (no USB needed)
+- Clawy levels up — lifetime stats unlock new animations
+- Custom color themes and sprite sets
+- Session history persisted across reboots
+- Configurable audio notifications (walk away, hear when it needs you)
+- Diagnostic script to test connectivity and verify hooks
+- Device settings menu via button combo (brightness, WiFi, version)
+
+## Security
+
+Clawy communicates over plaintext TCP on your local network. The approval port (7801) — used for approving/denying Claude Code permission requests via the physical buttons — has no authentication. Anyone on the same network could send an approval response.
+
+**Use Clawy on trusted networks only.** Token-based auth for the approval port is planned for a future release.
 
 ## Requirements
 

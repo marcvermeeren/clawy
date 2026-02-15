@@ -45,16 +45,31 @@ if [ -n "$MESSAGE" ]; then
   PAYLOAD="${PAYLOAD}MESSAGE:$MESSAGE\n"
 fi
 
-# Fire-and-forget: send via netcat, background + disown
-# -G 1 = 1s connect timeout, -w 1 = 1s idle timeout
+# Fire-and-forget: python3 socket (portable across macOS + Linux, no nc flags)
 # Retry once with fresh mDNS resolve on failure
-(
-  printf "$PAYLOAD" | nc -G 1 -w 1 "$HOST" "$PORT" 2>/dev/null
-  if [ $? -ne 0 ]; then
-    rm -f "$CACHE_FILE"
-    HOST=$(python3 -c "import socket; print(socket.gethostbyname('clawy.local'))" 2>/dev/null)
-    [ -n "$HOST" ] && printf '%s' "$HOST" > "$CACHE_FILE" && printf "$PAYLOAD" | nc -G 1 -w 1 "$HOST" "$PORT" 2>/dev/null
-  fi
-) &
+HOST="$HOST" PORT="$PORT" PAYLOAD="$PAYLOAD" CACHE_FILE="$CACHE_FILE" python3 -c "
+import socket, os
+def send(host, port, payload):
+    s = socket.create_connection((host, port), timeout=1)
+    s.sendall(payload.encode())
+    s.close()
+host = os.environ['HOST']
+port = int(os.environ['PORT'])
+payload = os.environ['PAYLOAD'].replace(r'\n', '\n')
+try:
+    send(host, port, payload)
+except Exception:
+    try:
+        os.remove(os.environ['CACHE_FILE'])
+    except OSError:
+        pass
+    try:
+        host = socket.gethostbyname('clawy.local')
+        with open(os.environ['CACHE_FILE'], 'w') as f:
+            f.write(host)
+        send(host, port, payload)
+    except Exception:
+        pass
+" &
 disown
 exit 0
