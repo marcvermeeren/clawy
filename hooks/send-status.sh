@@ -47,6 +47,14 @@ fi
 
 # Fire-and-forget: send via netcat, background + disown
 # -G 1 = 1s connect timeout, -w 1 = 1s idle timeout
-printf "$PAYLOAD" | nc -G 1 -w 1 "$HOST" "$PORT" &
+# Retry once with fresh mDNS resolve on failure
+(
+  printf "$PAYLOAD" | nc -G 1 -w 1 "$HOST" "$PORT" 2>/dev/null
+  if [ $? -ne 0 ]; then
+    rm -f "$CACHE_FILE"
+    HOST=$(python3 -c "import socket; print(socket.gethostbyname('clawy.local'))" 2>/dev/null)
+    [ -n "$HOST" ] && printf '%s' "$HOST" > "$CACHE_FILE" && printf "$PAYLOAD" | nc -G 1 -w 1 "$HOST" "$PORT" 2>/dev/null
+  fi
+) &
 disown
 exit 0

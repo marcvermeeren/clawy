@@ -23,9 +23,6 @@ arduino-cli upload -b m5stack:esp32:m5stack_stickc_plus2 -p /dev/cu.usbserial-* 
 
 # Compile + Upload
 arduino-cli compile -b m5stack:esp32:m5stack_stickc_plus2 -u -p /dev/cu.usbserial-* firmware/clawy/
-
-# Build for web flasher (outputs .bin to web/)
-arduino-cli compile -b m5stack:esp32:m5stack_stickc_plus2 --output-dir web/ firmware/clawy/
 ```
 
 ## WiFi Provisioning

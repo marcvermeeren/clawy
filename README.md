@@ -13,7 +13,7 @@ A JRPG-styled companion device for [Claude Code](https://docs.anthropic.com/en/d
 ### Path A: Flash from Browser (Recommended)
 
 1. Plug in the M5StickC Plus 2 via USB
-2. Visit the [web flasher](https://marcusschiesser.github.io/clawy/) in Chrome or Edge
+2. Visit the [web flasher](https://clawy.lol/flash) in Chrome or Edge
 3. Click **Install Clawy** and select the serial port
 4. Enter your WiFi SSID and password when prompted
 5. Install the hooks:
@@ -105,7 +105,6 @@ This removes the hooks from Claude Code settings and deletes `~/.clawy/`. If you
 clawy/
 ├── firmware/clawy/     Arduino sketch (M5StickC Plus 2)
 ├── hooks/              Claude Code hook scripts
-├── web/                Browser-based firmware flasher
 ├── marketing/          Sprite exports and assets
 ├── install.sh          Hook installer
 └── uninstall.sh        Hook uninstaller

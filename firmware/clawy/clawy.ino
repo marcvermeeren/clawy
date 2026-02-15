@@ -409,17 +409,17 @@ void processLine(const char* line) {
 // ============================================================
 
 void checkIdleProgression() {
-  if (!isStatus("READY")) return;
-
   unsigned long elapsed = millis() - statusStart;
 
-  // Blink trigger
-  if (elapsed < IDLE_SLEEP_MS && (millis() - lastBlink > BLINK_INTERVAL)) {
+  // Blink trigger (READY only)
+  if (isStatus("READY") && elapsed < IDLE_SLEEP_MS && (millis() - lastBlink > BLINK_INTERVAL)) {
     lastBlink = millis();
   }
 
-  // Sleep transition
-  if (elapsed >= IDLE_SLEEP_MS && !isSleeping) {
+  // Sleep transition — any idle state (READY, DONE, ERROR) can sleep
+  if (!isSleeping && elapsed >= IDLE_SLEEP_MS) {
+    // Don't sleep during active/interactive states
+    if (isStatus("WORKING") || isStatus("TOOL") || isStatus("INPUT") || isStatus("APPROVE")) return;
     isSleeping = true;
     frame = 0;
   }

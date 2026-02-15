@@ -14,6 +14,7 @@
 #define APPROVAL_PORT  7801
 #define CMD_MAX        2
 #define TCP_BUF        256
+#define CMD_STALE_MS   10000  // drop command clients idle >10s
 
 // Forward declaration (defined in .ino)
 extern void processLine(const char* line);
@@ -25,6 +26,7 @@ static WiFiServer approvalServer(APPROVAL_PORT);
 static WiFiClient cmdClients[CMD_MAX];
 static char cmdBuf[CMD_MAX][TCP_BUF];
 static uint8_t cmdPos[CMD_MAX] = {0, 0};
+static unsigned long cmdLastActive[CMD_MAX] = {0, 0};
 
 // Approval client (long-lived, one at a time)
 static WiFiClient approvalClient;
@@ -108,6 +110,20 @@ void wifiPoll() {
   if (!_wifiUp) return;
 
   // --- Command port (fire-and-forget) ---
+
+  // Clean up stale/disconnected clients first to free slots
+  for (int i = 0; i < CMD_MAX; i++) {
+    if (!cmdClients[i]) continue;
+    if (!cmdClients[i].connected() || (millis() - cmdLastActive[i] > CMD_STALE_MS)) {
+      if (cmdPos[i] > 0) {
+        cmdBuf[i][cmdPos[i]] = '\0';
+        processLine(cmdBuf[i]);
+        cmdPos[i] = 0;
+      }
+      cmdClients[i].stop();
+    }
+  }
+
   WiFiClient nc = cmdServer.available();
   if (nc) {
     nc.setNoDelay(true);
@@ -116,6 +132,7 @@ void wifiPoll() {
       if (!cmdClients[i] || !cmdClients[i].connected()) {
         cmdClients[i] = nc;
         cmdPos[i] = 0;
+        cmdLastActive[i] = millis();
         stored = true;
         break;
       }
@@ -124,17 +141,10 @@ void wifiPoll() {
   }
 
   for (int i = 0; i < CMD_MAX; i++) {
-    if (!cmdClients[i]) continue;
-    if (cmdClients[i].connected()) {
+    if (!cmdClients[i] || !cmdClients[i].connected()) continue;
+    if (cmdClients[i].available()) {
       tcpReadLines(cmdClients[i], cmdBuf[i], cmdPos[i]);
-    } else {
-      // Client disconnected — drain remaining buffer
-      if (cmdPos[i] > 0) {
-        cmdBuf[i][cmdPos[i]] = '\0';
-        processLine(cmdBuf[i]);
-        cmdPos[i] = 0;
-      }
-      cmdClients[i].stop();
+      cmdLastActive[i] = millis();
     }
   }
 

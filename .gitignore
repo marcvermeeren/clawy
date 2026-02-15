@@ -23,8 +23,3 @@ config_local.h
 
 # Claude Code
 .claude/
-
-# Web flasher build artifacts (keep flashable .bins for GitHub Pages)
-web/*.elf
-web/*.map
-web/clawy.ino.merged.bin
