@@ -4,7 +4,7 @@
   <img src="assets/exports/gif/idle.gif" alt="Clawy" width="128" style="image-rendering: pixelated;">
 </p>
 
-Clawy is built as a cute pixel companion for [Claude Code](https://docs.anthropic.com/en/docs/claude-code) sessions, a little guy that fits in your pocket that tells you what's going on, lets you approve or deny without touching your keyboard, and makes the whole experience feel a bit more alive.
+Clawy is built as a cute pixel companion for [Claude Code](https://docs.anthropic.com/en/docs/claude-code) sessions, a little guy that fits in your pocket that tells you what's going on, lets you approve or deny without touching your keyboard, and turns your whole session into a cozy co-op game.
 
 > This started as a prototype I built for myself. It's rough around the edges but it works, and I'm actively improving it. Contributions and feedback welcome.
 
@@ -44,13 +44,14 @@ Clawy is built as a cute pixel companion for [Claude Code](https://docs.anthropi
 2. Visit the [web flasher](https://clawy.lol/flash) in Chrome or Edge
 3. Click **Install Clawy** and select the serial port
 4. Enter your WiFi credentials on the flash page (sent directly to the device over USB — never leaves your computer)
-5. Install the hooks:
+5. Reboot the device after flashing (press and hold the power button, then turn it back on)
+6. Install the hooks:
    ```bash
    git clone https://github.com/marcvermeeren/clawy.git
    cd clawy
    ./install.sh
    ```
-6. Start a session:
+7. Start a session:
    ```bash
    clawy
    # or: CLAWY=1 claude
