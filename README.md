@@ -1,10 +1,30 @@
 # Clawy
 
 <p align="center">
-  <img src="assets/exports/states/ready.gif" alt="Clawy — Awaiting orders" width="200">
+  <img src="assets/exports/gif/idle.gif" alt="Clawy" width="128" style="image-rendering: pixelated;">
 </p>
 
 Clawy is built as a cute pixel companion for [Claude Code](https://docs.anthropic.com/en/docs/claude-code) sessions, a little guy that fits in your pocket that tells you what's going on, lets you approve or deny without touching your keyboard, and makes the whole experience feel a bit more alive.
+
+◆ 8 animated states to see what Claude is doing at a glance
+
+◆ Approve or deny straight from the device, no need to be at your computer
+
+★ Powered by Claude Code hooks native integration
+
+♥ Runs on an off-the-shelf M5StickC Plus 2
+
+◆ Works from any project, Clawy follows your sessions
+
+★ JRPG aesthetic — portrait frames, dialog boxes, scrolling quest text, particle effects and boot sequence
+
+♥ Zero config after WiFi setup — mDNS discovery, no IPs to manage
+
+◆ Session stats — prompts, tool calls, errors, and average response time
+
+★ Clawy curls up to sleep after 30 seconds of inactivity
+
+♥ No cloud, no server — just plain TCP on your local network, nothing leaves your machine
 
 ## What You Need
 
@@ -19,7 +39,7 @@ Clawy is built as a cute pixel companion for [Claude Code](https://docs.anthropi
 1. Plug in the M5StickC Plus 2 via USB
 2. Visit the [web flasher](https://clawy.lol/flash) in Chrome or Edge
 3. Click **Install Clawy** and select the serial port
-4. Enter your WiFi SSID and password when prompted
+4. Enter your WiFi credentials on the flash page (sent directly to the device over USB — never leaves your computer)
 5. Install the hooks:
    ```bash
    git clone https://github.com/marcvermeeren/clawy.git
@@ -104,32 +124,10 @@ This removes the hooks from Claude Code settings and deletes `~/.clawy/`. If you
 clawy/
 ├── firmware/clawy/     Arduino sketch (M5StickC Plus 2)
 ├── hooks/              Claude Code hook scripts
-├── assets/          Sprite exports and assets
+├── assets/             Sprite exports and assets
 ├── install.sh          Hook installer
 └── uninstall.sh        Hook uninstaller
 ```
-
-## Features
-
-◆ 8 animated states to see what Claude is doing at a glance
-
-◆ Approve or deny straight from the device, no need to be at your computer
-
-★ Powered by Claude Code hooks native integration
-
-♥ Runs on an off-the-shelf M5StickC Plus 2
-
-◆ Works from any project, Clawy follows your sessions
-
-★ JRPG aesthetic portrait frames, dialog boxes, scrolling quest text, particle effects and boot sequence
-
-♥ Zero config networking just plug in and go
-
-◆ Session stats like prompts, tool calls, errors, and average response time on a simple stats screen
-
-★ Clawy curls up to sleep after 30 seconds of inactivity
-
-♥ No cloud, no server just plain TCP on your local network, nothing leaves your network
 
 ## Roadmap
 
