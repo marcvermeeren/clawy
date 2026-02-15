@@ -6,6 +6,8 @@
 
 Clawy is built as a cute pixel companion for [Claude Code](https://docs.anthropic.com/en/docs/claude-code) sessions, a little guy that fits in your pocket that tells you what's going on, lets you approve or deny without touching your keyboard, and makes the whole experience feel a bit more alive.
 
+## Features
+
 ◆ 8 animated states to see what Claude is doing at a glance
 
 ◆ Approve or deny straight from the device, no need to be at your computer
@@ -16,15 +18,15 @@ Clawy is built as a cute pixel companion for [Claude Code](https://docs.anthropi
 
 ◆ Works from any project, Clawy follows your sessions
 
-★ JRPG aesthetic — portrait frames, dialog boxes, scrolling quest text, particle effects and boot sequence
+★ JRPG aesthetic portrait frames, dialog boxes, scrolling quest text, particle effects and boot sequence
 
-♥ Zero config after WiFi setup — mDNS discovery, no IPs to manage
+♥ Zero config after WiFi setup, mDNS discovery, no IPs to manage
 
 ◆ Session stats — prompts, tool calls, errors, and average response time
 
 ★ Clawy curls up to sleep after 30 seconds of inactivity
 
-♥ No cloud, no server — just plain TCP on your local network, nothing leaves your machine
+♥ No cloud, no server, just plain TCP on your local network, nothing leaves your machine
 
 ## What You Need
 
@@ -140,7 +142,7 @@ clawy/
 - Multi-session support (multiple Claude sessions, multiple devices)
 - Sound effects via buzzer (approve alert, done chime, error buzz)
 - OTA firmware updates from browser (no USB needed)
-- Clawy levels up — lifetime stats unlock new animations
+- Clawy levels up, lifetime stats unlock new animations
 - Custom color themes and sprite sets
 - Session history persisted across reboots
 - Configurable audio notifications (walk away, hear when it needs you)
