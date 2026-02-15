@@ -6,6 +6,8 @@
 
 Clawy is built as a cute pixel companion for [Claude Code](https://docs.anthropic.com/en/docs/claude-code) sessions, a little guy that fits in your pocket that tells you what's going on, lets you approve or deny without touching your keyboard, and makes the whole experience feel a bit more alive.
 
+> This started as a prototype I built for myself. It's rough around the edges but it works, and I'm actively improving it. Contributions and feedback welcome.
+
 ## Features
 
 ◆ 8 animated states to see what Claude is doing at a glance
