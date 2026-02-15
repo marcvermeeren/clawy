@@ -43,7 +43,7 @@ Clawy is built as a cute pixel companion for [Claude Code](https://docs.anthropi
 1. Plug in the M5StickC Plus 2 via USB
 2. Visit the [web flasher](https://clawy.lol/flash) in Chrome or Edge
 3. Click **Install Clawy** and select the serial port
-4. Enter your WiFi credentials on the flash page (sent directly to the device over USB — never leaves your computer)
+4. Enter your WiFi credentials on the flash page (sent directly to the device over USB, never leaves your computer)
 5. Reboot the device after flashing (press and hold the power button, then turn it back on)
 6. Install the hooks:
    ```bash
