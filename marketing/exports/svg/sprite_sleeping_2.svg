@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 64 64" shape-rendering="crispEdges">
+<rect width="64" height="64" fill="#000000"/>
+<rect x="12" y="26" width="3" height="1" fill="#646464"/>
+<rect x="11" y="27" width="7" height="1" fill="#646464"/>
+<rect x="10" y="28" width="10" height="1" fill="#646464"/>
+<rect x="10" y="29" width="10" height="1" fill="#646464"/>
+<rect x="8" y="30" width="15" height="1" fill="#646464"/>
+<rect x="7" y="31" width="19" height="1" fill="#646464"/>
+<rect x="6" y="32" width="22" height="1" fill="#646464"/>
+<rect x="6" y="33" width="22" height="1" fill="#646464"/>
+<rect x="6" y="34" width="26" height="1" fill="#646464"/>
+<rect x="4" y="35" width="32" height="1" fill="#646464"/>
+<rect x="4" y="36" width="36" height="1" fill="#646464"/>
+<rect x="4" y="37" width="36" height="1" fill="#646464"/>
+<rect x="6" y="38" width="38" height="1" fill="#646464"/>
+<rect x="7" y="39" width="40" height="1" fill="#646464"/>
+<rect x="8" y="40" width="42" height="1" fill="#646464"/>
+<rect x="8" y="41" width="42" height="1" fill="#646464"/>
+<rect x="10" y="42" width="41" height="1" fill="#646464"/>
+<rect x="11" y="43" width="41" height="1" fill="#646464"/>
+<rect x="12" y="44" width="42" height="1" fill="#646464"/>
+<rect x="12" y="45" width="42" height="1" fill="#646464"/>
+<rect x="14" y="46" width="40" height="1" fill="#646464"/>
+<rect x="15" y="47" width="39" height="1" fill="#646464"/>
+<rect x="16" y="48" width="36" height="1" fill="#646464"/>
+<rect x="16" y="49" width="36" height="1" fill="#646464"/>
+<rect x="18" y="50" width="34" height="1" fill="#646464"/>
+<rect x="19" y="51" width="32" height="1" fill="#646464"/>
+<rect x="20" y="52" width="30" height="1" fill="#646464"/>
+<rect x="20" y="53" width="30" height="1" fill="#646464"/>
+<rect x="22" y="54" width="26" height="1" fill="#646464"/>
+<rect x="24" y="55" width="23" height="1" fill="#646464"/>
+<rect x="27" y="56" width="17" height="1" fill="#646464"/>
+<rect x="27" y="57" width="17" height="1" fill="#646464"/>
+<rect x="30" y="58" width="12" height="1" fill="#646464"/>
+<rect x="32" y="59" width="7" height="1" fill="#646464"/>
+</svg>

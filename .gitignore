@@ -1,0 +1,30 @@
+# Arduino CLI build artifacts
+build/
+*.elf
+*.bin
+*.hex
+*.map
+
+# Compiled libraries
+libraries/
+
+# macOS
+.DS_Store
+
+# IDE files
+.vscode/
+*.code-workspace
+.idea/
+
+# Secrets — never commit these
+firmware/clawy/secrets.h
+credentials.h
+config_local.h
+
+# Claude Code
+.claude/
+
+# Web flasher build artifacts (keep flashable .bins for GitHub Pages)
+web/*.elf
+web/*.map
+web/clawy.ino.merged.bin
