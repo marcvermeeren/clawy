@@ -150,6 +150,7 @@ clawy/
 - Configurable audio notifications (walk away, hear when it needs you)
 - Diagnostic script to test connectivity and verify hooks
 - Device settings menu via button combo (brightness, WiFi, version)
+- Voice input via built-in mic (hold to talk, local Whisper transcription)
 
 ## Security
 
