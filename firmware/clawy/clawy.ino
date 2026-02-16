@@ -79,6 +79,14 @@ bool isStatus(const char* s) {
   return strcmp(currentStatus, s) == 0;
 }
 
+// Called by wifi_transport when approval client disconnects while pending
+// (hook killed = user approved in terminal)
+void onApprovalDisconnect() {
+  if (isStatus("APPROVE")) {
+    showStatus("WORKING");
+  }
+}
+
 int getBatteryPercent() {
   int pct = M5.Power.getBatteryLevel();
   if (pct < 0) pct = 0;
@@ -278,6 +286,9 @@ void renderFrame() {
 void showStatus(const char* status) {
   if (strcmp(currentStatus, status) == 0 && !isSleeping) return;
 
+  // Suppress WORKING while showing tool execution — stay on TOOL
+  if (strcmp(status, "WORKING") == 0 && isStatus("TOOL")) return;
+
   // Stats tracking
   if (strcmp(status, "WORKING") == 0) {
     stats.promptCount++;
@@ -296,7 +307,7 @@ void showStatus(const char* status) {
   }
 
   // Clear approval pending when leaving APPROVE state
-  if (isStatus("APPROVE")) wifiSetApprovalPending(false);
+  if (isStatus("APPROVE")) wifiClearApproval();
 
   isSleeping = false;
   strncpy(currentStatus, status, sizeof(currentStatus) - 1);
@@ -319,6 +330,7 @@ void showStatus(const char* status) {
 
 void showTool(const char* label) {
   bool wasAlreadyTool = isStatus("TOOL");
+  if (isStatus("APPROVE")) wifiClearApproval();
   strncpy(currentStatus, "TOOL", sizeof(currentStatus) - 1);
   strncpy(toolLabel, label, sizeof(toolLabel) - 1);
   toolLabel[sizeof(toolLabel) - 1] = '\0';

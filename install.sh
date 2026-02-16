@@ -132,6 +132,11 @@ clawy_hooks = {
             "hooks": [{"type": "command", "command": hooks_dir + "/send-tool-status.sh"}]
         }
     ],
+    "PostToolUse": [
+        {
+            "hooks": [{"type": "command", "command": hooks_dir + "/send-status.sh WORKING"}]
+        }
+    ],
     "PostToolUseFailure": [
         {
             "hooks": [{"type": "command", "command": hooks_dir + "/send-status.sh ERROR"}]

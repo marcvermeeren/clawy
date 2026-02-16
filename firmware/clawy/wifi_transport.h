@@ -16,8 +16,9 @@
 #define TCP_BUF        256
 #define CMD_STALE_MS   10000  // drop command clients idle >10s
 
-// Forward declaration (defined in .ino)
+// Forward declarations (defined in .ino)
 extern void processLine(const char* line);
+extern void onApprovalDisconnect();
 
 static WiFiServer cmdServer(CMD_PORT);
 static WiFiServer approvalServer(APPROVAL_PORT);
@@ -45,6 +46,16 @@ static unsigned long _approvalTimestamp = 0;
 void wifiSetApprovalPending(bool pending) {
   _approvalPending = pending;
   _approvalTimestamp = pending ? millis() : 0;
+}
+
+void wifiClearApproval() {
+  if (!_approvalPending) return;
+  _approvalPending = false;
+  _approvalTimestamp = 0;
+  if (approvalClient) {
+    approvalClient.stop();
+    aprPos = 0;
+  }
 }
 
 // ── Helpers ──────────────────────────────────────────────────
@@ -185,6 +196,13 @@ void wifiPoll() {
         _approvalPending = false;
         approvalClient.stop();
         aprPos = 0;
+      } else if (!approvalClient.connected() && !approvalClient.available()) {
+        // Hook was killed (terminal approval) — TCP FIN received, no data left
+        _approvalPending = false;
+        _approvalTimestamp = 0;
+        approvalClient.stop();
+        aprPos = 0;
+        onApprovalDisconnect();
       }
     } else if (!approvalClient.connected()) {
       // Not pending — clean up disconnected client
