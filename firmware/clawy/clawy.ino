@@ -2,7 +2,7 @@
 // Animated pixel art fox/cat on M5StickC Plus 2 (135x240 color TFT)
 // Driven by Claude Code hooks over WiFi
 
-#define FIRMWARE_VERSION "0.1.0-beta"
+#define FIRMWARE_VERSION "0.1.1-beta"
 
 #include <M5Unified.h>
 #include "display.h"
