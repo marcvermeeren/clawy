@@ -83,9 +83,45 @@ Clawy is built as a cute pixel companion for [Claude Code](https://docs.anthropi
    clawy
    ```
 
+## OpenClaw (Experimental)
+
+Clawy now includes an **OpenClaw internal hook deployment path** for the same device protocol.
+
+Install it with:
+
+```bash
+./install-openclaw.sh
+```
+
+This deploys the hook to `~/.openclaw/hooks/clawy-status`, enables it, and restarts the Gateway.
+
+Current OpenClaw status mapping:
+
+- `gateway:startup`, `agent:bootstrap`, `/new`, `/reset` -> `READY`
+- inbound message -> `WORKING`
+- outbound reply -> `DONE`
+- outbound reply that looks like a question -> `INPUT` (best-effort heuristic)
+- outbound send failure -> `ERROR`
+- `/stop` -> `DONE`
+
+Current limitations vs Claude Code:
+
+- no per-tool `TOOL:<label>` status yet
+- no physical approve/deny support for OpenClaw approvals yet
+
+Those need a deeper OpenClaw plugin/runtime-hook integration rather than internal Gateway hooks alone.
+
+To remove the OpenClaw deployment:
+
+```bash
+./uninstall-openclaw.sh
+```
+
 ## How It Works
 
 Clawy uses Claude Code [hooks](https://docs.anthropic.com/en/docs/claude-code/hooks) to track session state. When Claude thinks, runs tools, finishes, or needs input, the hook scripts send status updates over WiFi to the device.
+
+For OpenClaw, the included internal hook listens to Gateway/session/message events and sends the same TCP status packets to the device.
 
 The device advertises itself as `clawy.local` via mDNS. No IP configuration needed.
 
@@ -127,11 +163,14 @@ This removes the hooks from Claude Code settings and deletes `~/.clawy/`. If you
 
 ```
 clawy/
-├── firmware/clawy/     Arduino sketch (M5StickC Plus 2)
-├── hooks/              Claude Code hook scripts
-├── assets/             Sprite exports and assets
-├── install.sh          Hook installer
-└── uninstall.sh        Hook uninstaller
+├── firmware/clawy/          Arduino sketch (M5StickC Plus 2)
+├── hooks/                   Claude Code hook scripts
+├── openclaw-hooks/          OpenClaw internal hook deployment
+├── assets/                  Sprite exports and assets
+├── install.sh               Claude Code hook installer
+├── uninstall.sh             Claude Code hook uninstaller
+├── install-openclaw.sh      OpenClaw hook installer
+└── uninstall-openclaw.sh    OpenClaw hook uninstaller
 ```
 
 ## Roadmap
